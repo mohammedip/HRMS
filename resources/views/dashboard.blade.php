@@ -8,9 +8,16 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
+            {{-- @if(request()->has('view_delete')) --}}
+                <div class="p-6 text-gray-900 dark:text-gray-100 grid grid-cols-3 gap-4">
+                    <a href="{{ route('departments.restore.all') }}" class="bg-blue-500 text-white text-center text-lg font-medium py-2 px-4 rounded hover:bg-blue-600 transition">
+                                Restore all department 
+                    </a>
+                    <a href="{{ route('employer.restore.all') }}" class="bg-blue-500 text-white text-center text-lg font-medium py-2 px-4 rounded hover:bg-blue-600 transition">
+                                Restore all employers 
+                    </a>
                 </div>
+               {{-- @endif --}}
             </div>
         </div>
     </div>
