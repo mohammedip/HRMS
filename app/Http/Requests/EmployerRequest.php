@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+
 class EmployerRequest extends FormRequest
 {
     /**
@@ -23,7 +24,7 @@ class EmployerRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:employers,email,' . $this->route('employer') . ',id|max:255', 
+            'email' => 'nullable|email|max:255|unique:employers,email,' . $this->route('employer') ,
             'telephone' => 'required|string|max:20',
             'date_naissance' => 'required|date',
             'adresse' => 'required|string|max:255',
@@ -31,7 +32,7 @@ class EmployerRequest extends FormRequest
             'type_contrat' => 'required|string|in:CDI,CDD,Freelance',
             'salaire' => 'required|numeric|min:0',
             'statut' => 'required|string|in:actif,inactif',
-            'departement_id' => 'required|exists:departements,id',
+            'department_id' => 'required|exists:departments,id',
             'role_id' => 'required|exists:roles,id',
         ];
     }

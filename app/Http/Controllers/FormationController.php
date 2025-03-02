@@ -3,67 +3,60 @@
 namespace App\Http\Controllers;
 
 use App\Models\Formation;
-use App\Http\Requests\StoreFormationRequest;
-use App\Http\Requests\UpdateFormationRequest;
+use App\Http\Requests\FormationRequest;
+use Illuminate\Http\Request;
 
 class FormationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+   
     public function index()
     {
-        // $formations = Formation::paginate(10);
-        // return view('formation.index', [
-        //     'formations' => $formations
-        // ]);
+        $formations = Formation::paginate(10);
+        return view('formation.index', compact('formations'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+   
     public function create()
     {
-        //
+        return view('formation.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreFormationRequest $request)
+   
+    public function store(FormationRequest $request)
     {
-        //
+        Formation::create($request->validated());
+
+        return redirect()->route('formation.index')
+                         ->with('status', 'Formation ajoutée avec succès.');
     }
 
-    /**
-     * Display the specified resource.
-     */
+   
     public function show(Formation $formation)
     {
-        //
+        return view('formation.show', compact('formation'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    
     public function edit(Formation $formation)
     {
-        //
+        return view('formation.edit', compact('formation'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateFormationRequest $request, Formation $formation)
+    
+    public function update(FormationRequest $request, Formation $formation)
     {
-        //
+        $formation->update($request->validated());
+
+        return redirect()->route('formation.index')
+                         ->with('status', 'Formation mise à jour avec succès.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+   
     public function destroy(Formation $formation)
     {
-        //
+        $formation->delete();
+
+        return redirect()->route('formation.index')
+                         ->with('status', 'Formation supprimée avec succès.');
     }
 }

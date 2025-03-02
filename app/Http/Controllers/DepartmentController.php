@@ -97,6 +97,6 @@ class DepartmentController extends Controller
         
         Department::onlyTrashed()->restore();
         echo "displayed";
-        // return back()->with('status', 'Department restored successfully');
+        return back()->with('status', 'Department restored successfully');
     }
 }

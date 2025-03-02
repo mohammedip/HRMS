@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class FormationRequest extends FormRequest
+class EmploiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return true; 
     }
 
     /**
@@ -22,11 +22,8 @@ class FormationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nom' => 'required|string|max:255',
-            'type_formation' => 'required|string|max:255',
-            'date_formation' => 'required|date',
-            'certification' => 'nullable|string|max:255',
-            
+            'nom' => 'required|string|max:255', // Validates the nom field to be a required string with a max length
+            'department_id' => 'required|exists:departments,id', // Validates the department_id to exist in the departments table
         ];
     }
 }
