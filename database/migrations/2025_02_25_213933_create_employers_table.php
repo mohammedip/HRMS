@@ -22,8 +22,8 @@ return new class extends Migration
             $table->enum('type_contrat', ['CDI', 'CDD', 'Freelance']);
             $table->decimal('salaire', 10, 2);
             $table->enum('statut', ['actif', 'inactif']);
-            $table->foreignId('department_id')->constrained()->onDelete('cascade'); 
-            $table->foreignId('role_id')->constrained('roles')->onDelete('cascade'); 
+            $table->foreignId('department_id')->nullable()->constrained()->onDelete('cascade'); 
+            $table->foreignId('role_id')->nullable()->constrained('roles')->onDelete('cascade'); 
             $table->timestamps();
             $table->softDeletes(); 
         });

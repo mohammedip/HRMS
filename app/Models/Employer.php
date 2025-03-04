@@ -23,9 +23,11 @@ class Employer extends Model
         'date_recrutement',    
         'type_contrat',        
         'salaire',             
-        'statut',              
+        'statut',  
+        'grad',            
         'department_id',      
-        'role_id',             
+        'role_id',  
+        'emploi_id',            
     ];
 
     protected $dates = ['deleted_at']; 
@@ -43,5 +45,15 @@ class Employer extends Model
     public function responsable()
     {
         return $this->belongsTo(Employer::class, 'responsable_id');
+    }
+
+    public function emploi()
+    {
+        return $this->belongsTo(Emploi::class, 'emploi_id');
+    }
+
+    public function cursus()
+    {
+        return $this->hasMany(Cursus::class, 'employer_id');
     }
 }

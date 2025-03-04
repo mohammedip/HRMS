@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Emploi;
 use App\Models\Department;
 use Illuminate\Http\Request;
-use App\Http\Requests\EmploiRequest;
+use App\Http\Requests\emploiRequest;
 
 class EmploiController extends Controller
 {
@@ -30,7 +30,7 @@ class EmploiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(EmploiRequest $request)
+    public function store(emploiRequest $request)
     {
         Emploi::create($request->validated());
 
@@ -59,7 +59,7 @@ class EmploiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(EmploiRequest $request, Emploi $emploi)
+    public function update(emploiRequest $request, Emploi $emploi)
     {
         $emploi->update($request->validated());
 

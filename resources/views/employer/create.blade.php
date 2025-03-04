@@ -92,12 +92,23 @@
                                 @error('statut') <span class="text-red-500">{{ $message }}</span> @enderror
                             </div>
 
+                            <div class="mb-3">
+                                <label for="grad" class="block text-sm font-medium text-gray-700">Grad</label>
+                                <select name="grad" id="grad"
+                                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="Junior">Junior</option>
+                                    <option value="Senior">Senior</option>
+                                    <option value="Lead">Lead</option>
+                                </select>
+                                @error('grad') <span class="text-red-500">{{ $message }}</span> @enderror
+                            </div>
+
                             <!-- Department -->
                             <div class="mb-3">
                                 <label for="department_id" class="block text-sm font-medium text-gray-700">Department</label>
                                 <select name="department_id" id="department_id"
                                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                    @foreach($departments as $department)
+                                        @foreach($departments as $department)
                                         <option value="{{ $department->id }}">{{ $department->nom }}</option>
                                     @endforeach
                                 </select>
@@ -109,11 +120,24 @@
                                 <label for="role_id" class="block text-sm font-medium text-gray-700">Role</label>
                                 <select name="role_id" id="role_id"
                                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                    @foreach($roles as $role)
-                                        <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                        @foreach($roles as $role)
+                                        @if($role->name !== 'Admin')  
+                                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                                 @error('role_id') <span class="text-red-500">{{ $message }}</span> @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="emploi_id" class="block text-sm font-medium text-gray-700">Emploi</label>
+                                <select name="emploi_id" id="emploi_id"
+                                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                        @foreach($emplois as $emploi)
+                                            <option value="{{ $emploi->id }}">{{ $emploi->nom }}</option>
+                                    @endforeach
+                                </select>
+                                @error('emploi_id') <span class="text-red-500">{{ $message }}</span> @enderror
                             </div>
 
                             <div class="mb-3">

@@ -27,6 +27,9 @@
                                         <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Email</th>
                                         <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Phone</th>
                                         <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Department</th>
+                                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Role</th>
+                                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Grade</th>
+                                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Emploi</th>
                                         <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Recruitment Date</th>
                                         <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Action</th>
                                     </tr>
@@ -39,6 +42,8 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $employer->email }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $employer->telephone }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $employer->department->nom ?? 'N/A'}}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $employer->role->name ?? 'N/A'}}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $employer->emploi->nom ?? 'N/A'}}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $employer->date_recrutement }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             <a href="{{ route('employer.edit', $employer->id) }}" class="px-3 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-700">Edit</a>

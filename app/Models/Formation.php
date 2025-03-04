@@ -19,9 +19,15 @@ class Formation extends Model
     ];
 
     
-    public function employes()
+    public function employer()
     {
-        return $this->belongsToMany(Employe::class, 'employe_formation')
+        return $this->belongsToMany(Employe::class, 'employer_formation')
                     ->withTimestamps();
     }
+
+    public function employerFormations()
+    {
+        return $this->hasMany(EmployerFormation::class, 'formation_id');
+    }
+
 }

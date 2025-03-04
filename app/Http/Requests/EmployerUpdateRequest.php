@@ -4,8 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-
-class EmployerRequest extends FormRequest
+class EmployerUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +23,7 @@ class EmployerRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => "required|email|max:255|unique:employers,email",
+            'email' => "required|email|max:255|unique:employers,email," . $this->employer->id,
             'telephone' => 'required|string|max:20',
             'date_naissance' => 'required|date',
             'adresse' => 'required|string|max:255',
