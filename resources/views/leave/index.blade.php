@@ -23,7 +23,7 @@
                                 <p class="text-xl font-semibold text-gray-800 mt-2">{{ $employer->extra_time }} days</p>
                             </div>
                             
-                            <a href="{{ route('employer.extractExtraTime', $employer->id) }}" 
+                            <a href="{{--{{ route('employer.extractExtraTime', $employer->id) }}--}}" 
                                 class="px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600 focus:outline-none">
                                  Demande du recuperation
                              </a>
