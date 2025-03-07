@@ -27,7 +27,9 @@ class Employer extends Model
         'grad',            
         'department_id',      
         'role_id',  
-        'emploi_id',            
+        'emploi_id', 
+        'extra_time',
+        'leave_sold',          
     ];
 
     protected $dates = ['deleted_at']; 
@@ -55,5 +57,10 @@ class Employer extends Model
     public function cursus()
     {
         return $this->hasMany(Cursus::class, 'employer_id');
+    }
+
+    public function leaves()
+    {
+        return $this->hasMany(Leave::class);
     }
 }

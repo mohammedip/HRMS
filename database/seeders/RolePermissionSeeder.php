@@ -15,77 +15,37 @@ class RolePermissionSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
-            // Permissions générales
-            'view dashboard',
-            
-            // Gestion des utilisateurs et entreprises
-            'create entreprise',
-            'edit entreprise',
-            'delete entreprise',
-            'view entreprise',
+            'Admin permission',
 
-            // Gestion des employés
-            'create employee',
-            'edit employee',
-            'delete employee',
-            'view employee',
-            
-            // Gestion des départements et hiérarchie
-            'create department',
-            'edit department',
-            'delete department',
-            'view department',
-            
-            // Gestion des contrats et suivi de carrière
-            'manage contracts',
-            'manage salaries',
-            'manage promotions',
-            'manage trainings',
-            
-            // Gestion des fichiers et documents
-            'upload documents',
-            'delete documents',
-            'view documents',
-            
-            // Gestion des notifications
-            'send notifications',
+            'HR permission',
+
+            'Manager permission',
+
+            'Employe permission',
+
+           
         ];
 
-        // Création des permissions
         foreach ($permissions as $permission) {
             Permission::firstOrCreate(['name' => $permission]);
         }
 
-        // Création des rôles avec leurs permissions
         $roles_permissions = [
             'Admin' => [
-                'view dashboard',
-                'create entreprise', 'edit entreprise', 'delete entreprise', 'view entreprise',
-                'create employee', 'edit employee', 'delete employee', 'view employee',
-                'create department', 'edit department', 'delete department', 'view department',
-                'manage contracts', 'manage salaries', 'manage promotions', 'manage trainings',
-                'upload documents', 'delete documents', 'view documents',
-                'send notifications',
+                'Admin permission',
+               
             ],
             'HR' => [
-                'view dashboard',
-                'create employee', 'edit employee', 'delete employee', 'view employee',
-                'manage contracts', 'manage salaries', 'manage promotions', 'manage trainings',
-                'upload documents', 'delete documents', 'view documents',
-                'send notifications',
+                'HR permission',
+                
             ],
             'Manager' => [
-                'view dashboard',
-                'create employee', 'edit employee', 'view employee',
-                'create department', 'edit department', 'view department',
-                'upload documents', 'view documents',
-                'send notifications',
+                'Manager permission',
+             
             ],
             'Employe' => [
-                'view dashboard',
-                'view employee',
-                'view department',
-                'upload documents', 'view documents',
+                'Employe permission',
+              
             ],
         ];
 

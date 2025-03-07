@@ -35,6 +35,7 @@ class EmployerUpdateRequest extends FormRequest
             'department_id' => 'nullable|exists:departments,id',
             'role_id' => 'required|exists:roles,id',
             'emploi_id' => 'nullable|exists:emplois,id',
+            'extra_time' => 'required|numeric|min:0',
         ];
     }
 }

@@ -31,6 +31,9 @@
                                         <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Grade</th>
                                         <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Emploi</th>
                                         <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Recruitment Date</th>
+                                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Leave Days</th>
+                                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Extra Time</th>
+
                                         <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Action</th>
                                     </tr>
                                 </thead>
@@ -43,8 +46,19 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $employer->telephone }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $employer->department->nom ?? 'N/A'}}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $employer->role->name ?? 'N/A'}}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $employer->grad }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $employer->emploi->nom ?? 'N/A'}}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $employer->date_recrutement }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $employer->leave_sold }} Days</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $employer->extra_time }} Days
+                                            @can('HR permission')
+                                            <a href="{{ route('employer.extractExtraTime', $employer->id) }}" 
+                                                class="px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600 focus:outline-none">
+                                                 Extract it
+                                             </a>
+                                             @endcan
+
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             <a href="{{ route('employer.edit', $employer->id) }}" class="px-3 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-700">Edit</a>
                                             <a href="{{ route('employer.show', $employer->id) }}" class="px-3 py-1 bg-green-500 text-white text-xs rounded hover:bg-green-700">Show</a>

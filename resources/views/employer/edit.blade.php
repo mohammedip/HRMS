@@ -84,6 +84,13 @@
                                 @error('salaire') <span class="text-red-500">{{ $message }}</span> @enderror
                             </div>
 
+                            <div class="mb-3">
+                                <label for="extra_time" class="block text-sm font-medium text-gray-700">Extra time</label>
+                                <input type="number" name="extra_time" id="extra_time" value="{{ $employer->extra_time }}" step="0.01"
+                                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                @error('extra_time') <span class="text-red-500">{{ $message }}</span> @enderror
+                            </div>
+
                             <!-- Status -->
                             <div class="mb-3">
                                 <label for="statut" class="block text-sm font-medium text-gray-700">Status</label>

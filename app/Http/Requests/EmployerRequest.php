@@ -30,12 +30,13 @@ class EmployerRequest extends FormRequest
             'adresse' => 'required|string|max:255',
             'date_recrutement' => 'required|date',
             'type_contrat' => 'required|string|in:CDI,CDD,Freelance',
-            'salaire' => 'required|numeric|min:0',
+            'salaire' => 'required|numeric|min:3000',
             'statut' => 'required|string|in:actif,inactif',
             'grad' => 'required|string|in:Junior,Senior,Lead',
             'department_id' => 'nullable|exists:departments,id',
             'role_id' => 'required|exists:roles,id',
             'emploi_id' => 'nullable|exists:emplois,id',
+            'extra_time' => 'required|numeric|min:0',
         ];
     }
 }

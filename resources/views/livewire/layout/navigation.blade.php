@@ -34,38 +34,62 @@ new class extends Component
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
-                @can('view department')
+                @can('Admin permission')
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('department.index')" :active="request()->routeIs('department.index')" wire:navigate>
                         {{ __('Department') }}
                     </x-nav-link>
                 </div>
                 @endcan
+
+                @canany(['HR permission','Manager permission', 'Admin permission'])
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('employer.index')" :active="request()->routeIs('employer.index')" wire:navigate>
                         {{ __('Employer') }}
                     </x-nav-link>
                 </div>
+                @endcanany
+
+                @canany(['HR permission','Manager permission', 'Admin permission'])
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('formation.index')" :active="request()->routeIs('formation.index')" wire:navigate>
                         {{ __('Formation') }}
                     </x-nav-link>
                 </div>
+                @endcanany
+                @canany(['HR permission', 'Admin permission'])
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('emploi.index')" :active="request()->routeIs('emploi.index')" wire:navigate>
                         {{ __('Emploi') }}
                     </x-nav-link>
                 </div>
+                @endcanany
+                
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('employerFormation.index')" :active="request()->routeIs('employerFormation.index')" wire:navigate>
                         {{ __('Inscription') }}
                     </x-nav-link>
                 </div>
+                
+                
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('organigramme.index')" :active="request()->routeIs('organigramme.index')" wire:navigate>
                         {{ __('Organigramme') }}
                     </x-nav-link>
                 </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('leave.index')" :active="request()->routeIs('leave.index')" wire:navigate>
+                        {{ __('Mes congés') }}
+                    </x-nav-link>
+                </div>
+                @canany(['HR permission','Manager permission','Admin permission'])
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('leave.pendingLeave')" :active="request()->routeIs('leave.pendingLeave')" wire:navigate>
+                        {{ __('Demandes de Congés') }}
+                    </x-nav-link>
+                </div>
+                @endcanany
             </div>
 
             <!-- Settings Dropdown -->

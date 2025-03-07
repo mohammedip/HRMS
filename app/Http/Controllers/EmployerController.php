@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Cursus;
 use App\Models\emploi;
@@ -9,6 +10,7 @@ use App\Models\Employer;
 use App\Models\Department;
 use Spatie\Permission\Models\Role; 
 use App\Http\Requests\EmployerRequest;
+use App\Notifications\NotificationToEmail;
 use App\Http\Requests\EmployerUpdateRequest;
 
 class EmployerController extends Controller
@@ -41,8 +43,19 @@ class EmployerController extends Controller
      */
     public function store(EmployerRequest $request )
     {
+        $recruitmentDate = Carbon::parse($request->date_recrutement);
+        $daysWorked = $recruitmentDate->diffInDays(Carbon::now());
+        $LeaveDays =(int)(($daysWorked /30) * 1.5 );
 
-        $employer =Employer::create($request->validated()); 
+        if($daysWorked > 365){
+            $LeaveDays += (int)((($daysWorked - 365)/365) * 0.5);
+        }
+
+
+
+        $employer =Employer::create(array_merge($request->validated(),['leave_sold' => $LeaveDays])); 
+
+        
 
         $password = bcrypt('123456789'); 
 
@@ -52,6 +65,9 @@ class EmployerController extends Controller
         'password' => $password,  
         
     ]);
+
+        $user->notify(new NotificationToEmail($employer));
+
 
     if ($request->has('role_id')) {
         $role = Role::where('id', $request->role_id)->first();
@@ -107,14 +123,42 @@ class EmployerController extends Controller
     $oldRole = $employer->role_id;
     $oldEmploi = $employer->emploi_id;
     $oldContractType = $employer->type_contrat;
-    $oldContractType = $employer->salaire;
+    $oldSlaire = $employer->salaire;
     $oldGrad = $employer->grad;
 
-    $employer->update($request->validated());
+    $user=User::where('email', $employer->email)->first();
+
+
+    $recruitmentDate = Carbon::parse($request->date_recrutement);
+        $daysWorked = $recruitmentDate->diffInDays(Carbon::now());
+        $LeaveDays =(int)(($daysWorked /30) * 1.5 );
+
+        if($daysWorked > 365){
+            $LeaveDays += (int)((($daysWorked - 365)/365) * 0.5);
+        } 
+
+    $employer->update(array_merge($request->validated(),['leave_sold' => $LeaveDays]));
+     
+    
+    $user->update([
+        'name' => $request->name,
+        'email' => $request->email,
+         
+        
+    ]);
+
+    if ($request->has('role_id')) {
+        $role = Role::where('id', $request->role_id)->first();
+        if ($role) {
+            $user->roles()->detach();
+            $user->assignRole($role);
+
+        }
+    } 
 
     if ($employer->department_id != $oldDepartment || $employer->role_id != $oldRole || 
             $employer->emploi_id != $oldEmploi || $employer->type_contrat != $oldContractType ||
-            $employer->salaire != $oldContractType || $employer->grad != $oldGrad) {
+            $employer->salaire != $oldSlaire || $employer->grad != $oldGrad) {
         
         Cursus::create([
             'employer_id' => $employer->id, 
@@ -138,7 +182,9 @@ class EmployerController extends Controller
      */
     public function destroy(Employer $employer)
     {
+        $user=User::where('email', $employer->email)->first();
         $employer->delete();
+        $user->delete();
 
         return redirect('/employer')->with('status','Employer deleted successfully');
     }
@@ -147,5 +193,18 @@ class EmployerController extends Controller
     {
         Employer::onlyTrashed()->restore();
         return redirect('/employer')->with('status', 'Employer restored successfully');
+    }
+
+    public function extractExtraTime(Employer $employer){
+
+        $LeaveDays = $employer->leave_sold + $employer->extra_time;
+
+        $employer->update([
+            'leave_sold' => $LeaveDays,
+            'extra_time' => 0,
+        ]);
+
+        return redirect()->back()->with('success', 'Extract the extra timeLeave successfully.');
+
     }
 }

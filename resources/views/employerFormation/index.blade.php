@@ -1,11 +1,13 @@
 <x-app-layout>
     <div class="container mx-auto mt-10">
-        <div class="flex justify-end mb-6">
-            <a href="{{ route('employerFormation.create') }}" 
-               class="bg-green-500 text-white font-medium py-2 px-4 rounded hover:bg-green-600 transition">
-                Ajouter une inscription
-            </a>
-        </div>
+        @canany(['HR permission', 'Admin permission','Manager permission'])
+            <div class="flex justify-end mb-6">
+                <a href="{{ route('employerFormation.create') }}" 
+                class="bg-green-500 text-white font-medium py-2 px-4 rounded hover:bg-green-600 transition">
+                    Ajouter une inscription
+                </a>
+            </div>
+        @endcanany
 
         <div class="flex flex-wrap justify-center gap-6">
             @foreach ($formations as $formation)
@@ -13,7 +15,8 @@
                     <h4 class="text-xl font-semibold text-gray-800 mb-3">{{ $formation->nom }}</h4>
 
                     @php
-                        // Get all employers related to the current formation
+                       
+                       
                         $employers = $formation->employerFormations->pluck('employer');
                     @endphp
 
@@ -26,12 +29,13 @@
                                     <span>{{ $employer->name }}</span>
 
                                     <!-- Form for deleting the inscription -->
+                                    @canany(['HR permission', 'Admin permission'])
                                     <form action="{{ route('employerFormation.destroy', [$employer->id, $formation->id]) }}" method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="bg-red-500 text-white text-xs px-2 py-1 rounded hover:bg-red-600">Supprimer</button>
                                     </form>
-                                  
+                                  @endcanany
                                 </li>
                             @endforeach
                         </ul>
@@ -46,3 +50,4 @@
         </div>
     </div>
 </x-app-layout>
+

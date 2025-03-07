@@ -10,52 +10,63 @@
 
                 <div id="wrapper">
                     <div id="container">
-                        <ol class="organizational-chart flex flex-col items-center">
-                            <!-- HR Role at the Top -->
+                        <ol class="organizational-chart flex flex-col items-center space-y-12">
+                            <!-- HR at the Top (no line before it) -->
                             <li class="relative">
-                                <div class="bg-blue-500 text-white p-4 rounded-lg shadow-md text-center w-48">
-                                    <h1 class="text-xl font-bold">HR</h1>
-                                </div>
-
-                                <!-- Departments under HR -->
-                                <ol class="flex flex-wrap justify-center mt-4 space-x-4">
-                                    @foreach ($departments as $department)
-                                        <li class="relative">
-                                            <div class="bg-green-500 text-white p-4 rounded-lg shadow-md text-center w-48">
-                                                <h2 class="text-lg font-bold">{{ $department->nom }}</h2>
+                                <ol class="flex justify-center mt-4 space-x-8">
+                                    @foreach ($hrEmployers as $hrEmployer)
+                                        <li>
+                                            <div class="bg-blue-500 text-white p-4 rounded-lg shadow-md text-center w-48">
+                                                <h2 class="text-md font-bold">HR</h2>
+                                                <p class="font-bold">{{ $hrEmployer->name }}</p>
                                             </div>
-
-                                            <ol class="flex flex-col items-center mt-4">
-                                                <!-- Department Manager -->
-                                                @php
-                                                    $manager = $department->employes->where('role.name', 'Manager')->first();
-                                                @endphp
-
-                                                @if($manager)
-                                                    <li>
-                                                        <div class="bg-yellow-500 text-white p-4 rounded-lg shadow-md text-center w-48">
-                                                            <h2 class="text-md font-bold">Manager</h2>
-                                                            <p>{{ $manager->name }}</p>
-                                                        </div>
-
-                                                        <ol class="flex flex-wrap justify-center mt-4 space-x-4">
-                                                            <!-- Other Employees in the Department -->
-                                                            @foreach ($department->employes->where('role.name', '!=', 'Manager') as $employer)
-                                                                <li>
-                                                                    <div class="bg-gray-500 text-white p-4 rounded-lg shadow-md text-center w-40">
-                                                                        <h2 class="text-sm font-bold">{{ $employer->role->name }}</h2>
-                                                                        <p>{{ $employer->name }}</p>
-                                                                    </div>
-                                                                </li>
-                                                            @endforeach
-                                                        </ol>
-                                                    </li>
-                                                @endif
-                                            </ol>
                                         </li>
                                     @endforeach
                                 </ol>
                             </li>
+
+                            <!-- Departments -->
+                            <ol class="flex flex-wrap justify-center mt-8 space-x-8">
+                                @foreach ($departments as $department)
+                                    <li class="relative flex flex-col items-center space-y-4">
+                                        <!-- Department Name -->
+                                        <div class="bg-green-500 text-white p-4 rounded-lg shadow-md text-center w-56">
+                                            <h2 class="text-lg font-bold">Department</h2>
+                                            <p>{{ $department->nom }}</p>
+                                        </div>
+                                        <!-- Line from Department to Manager -->
+                                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-12 w-1 h-8 bg-brown-500"></div>
+
+                                        <!-- Department Manager -->
+                                        @php
+                                            $manager = $department->employes->where('role.name', 'Manager')->first();
+                                        @endphp
+                                        @if($manager)
+                                            <div class="bg-yellow-500 text-white p-4 rounded-lg shadow-md text-center w-48 mt-4">
+                                                <h2 class="text-md font-bold">Manager</h2>
+                                                <p>{{ $manager->name }}</p>
+                                            </div>
+                                            <!-- Line from Manager to Employees -->
+                                            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-12 w-1 h-8 bg-brown-500"></div>
+                                        @endif
+
+                                        <!-- Employees -->
+                                        <ol class="flex flex-wrap justify-center mt-4 space-x-8">
+                                            @foreach ($department->employes->where('role.name', 'Employe') as $employee)
+                                                <li class="relative">
+                                                    <div class="bg-gray-500 text-white p-4 rounded-lg shadow-md text-center w-40">
+                                                        <h2 class="text-sm font-bold">Employee</h2>
+                                                        <p>{{ $employee->name }}</p>
+                                                    </div>
+                                                    @if (!$loop->last)
+                                                        <div class="absolute top-1/2 right-0 w-1 h-8 bg-brown-500"></div>
+                                                    @endif
+                                                </li>
+                                            @endforeach
+                                        </ol>
+                                    </li>
+                                @endforeach
+                            </ol>
                         </ol>
                     </div>
                 </div>
@@ -68,25 +79,57 @@
             position: relative;
         }
 
-        .organizational-chart li::before,
-        .organizational-chart li::after {
+        .organizational-chart > li > ol:before {
+            content: none;
+        }
+
+        .organizational-chart > li > ol > li > ol:before {
+            width: 2px;
+            height: 24px;
+            left: 50%;
+            top: -24px;
+        }
+
+        .organizational-chart > li > ol > li > ol > li::before {
             content: '';
             position: absolute;
+            left: 50%;
+            top: -24px;
+            width: 2px;
+            height: 24px;
             background-color: #b7a6aa;
         }
 
-        .organizational-chart > li > ol::before {
-            width: 2px;
-            height: 24px;
-            left: 50%;
-            top: -24px;
+        .organizational-chart {
+            margin-top: 20px;
+            margin-bottom: 20px;
         }
 
-        .organizational-chart > li > ol > li::before {
+        .organizational-chart > li > ol > li > div.bg-green-500 + .absolute {
+            position: absolute;
+            top: 100%;
+            left: 50%;
             width: 2px;
             height: 24px;
+            background-color: #b7a6aa;
+        }
+
+        .organizational-chart > li > ol > li > div.bg-yellow-500 + .absolute {
+            position: absolute;
+            top: 100%;
             left: 50%;
-            top: -24px;
+            width: 2px;
+            height: 24px;
+            background-color: #b7a6aa;
+        }
+
+        .organizational-chart > li > ol > li.relative > .absolute {
+            position: absolute;
+            top: 100%;
+            right: -15px;
+            width: 2px;
+            height: 24px;
+            background-color: #b7a6aa;
         }
     </style>
 </x-app-layout>
