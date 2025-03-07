@@ -2,6 +2,23 @@
 
 This application uses Laravel routing to manage different sections, including authentication, leave management, employer management, and more.
 
+## .env Configuration for SMTP
+
+Add the following configuration to your `.env` file to enable SMTP mailing using Gmail:
+
+```
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=your_email@gmail.com
+MAIL_PASSWORD=your_email_password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=your_email@gmail.com
+MAIL_FROM_NAME="Laravel SMTP"
+```
+
+Replace `your_email@gmail.com` and `your_email_password` with your actual email credentials.
+
 ## Routes
 
 ### Public Routes
